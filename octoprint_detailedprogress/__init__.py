@@ -47,9 +47,16 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 		if (currentData["progress"]["printTime"] == None):
 			currentData["progress"]["printTime"] = currentData["job"]["estimatedPrintTime"]
 
+		currentData["progress"]["printTimeLeftString"] = "No ETL yet"
+		currentData["progress"]["ETA"] = "No ETA yet"
+
 		#Add additional data
-		currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(currentData["progress"]["printTimeLeft"])
-		currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(time.time() + currentData["progress"]["printTimeLeft"]))
+		try:
+			currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(currentData["progress"]["printTimeLeft"])
+			currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(time.time() + currentData["progress"]["printTimeLeft"]))
+		except Exception as e:
+			self._logger.debug("Caught an exception trying to parse data: {0}\n Error is: {1}\nTraceback:{2}".format(currentData,e,traceback.format_exc()))
+
 		return currentData
 
 	def _get_next_message(self, currentData):
@@ -67,10 +74,10 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def _get_time_from_seconds(self, seconds):
 		hours = 0
 		minutes = 0
-		if seconds > 3600:
+		if seconds >= 3600:
 			hours = int(seconds / 3600)
 			seconds = seconds % 3600
-		if seconds > 60:
+		if seconds >= 60:
 			minutes = int(seconds / 60)
 			seconds = seconds % 60
 		return self._etl_format.format(**locals())
