@@ -1,6 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 import time
+import socket
 
 import octoprint.plugin
 import octoprint.util
@@ -28,16 +29,25 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 				self._repeat_timer.cancel()
 				self._repeat_timer = None
 			self._logger.info("Printing stopped. Detailed progress stopped.")
+			self._printer.commands("M117 Print Done")
+		elif event == Events.CONNECTED:
+			ip = self._get_host_ip()
+			if not ip:
+				return
+			self._printer.commands("M117 IP {}".format(ip))
 
 	def do_work(self):
+		if not self._printer.is_printing():
+			#we have nothing to do here
+			return
 		try:
 			currentData = self._printer.get_current_data()
 			currentData = self._sanitize_current_data(currentData)
 
 			message = self._get_next_message(currentData)
+			self._printer.commands("M117 {}".format(message))
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
-		self._printer.commands("M117 {}".format(message))
 
 	def _sanitize_current_data(self, currentData):
 		if (currentData["progress"]["printTimeLeft"] == None):
@@ -81,6 +91,9 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			minutes = int(seconds / 60)
 			seconds = seconds % 60
 		return self._etl_format.format(**locals())
+
+	def _get_host_ip(self):
+		return [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
 	##~~ Settings
 
