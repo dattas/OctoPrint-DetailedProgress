@@ -8,7 +8,7 @@ import octoprint.util
 import traceback
 from octoprint.events import Events
 
-class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
+class detailedprogress(octoprint.plugin.EventHandlerPlugin,
                              octoprint.plugin.SettingsPlugin,
 							 octoprint.plugin.TemplatePlugin,
 							 octoprint.plugin.AssetPlugin):
@@ -140,7 +140,7 @@ __plugin_name__ = "Detailed Progress Plugin"
 
 def __plugin_load__():
 	global __plugin_implementation__
-	__plugin_implementation__ = DetailedProgressPlugin()
+	__plugin_implementation__ = detailedprogress()
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
