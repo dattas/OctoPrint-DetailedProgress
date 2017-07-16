@@ -5,7 +5,7 @@
  * License: AGPLv3
  */
 $(function() {
-    function DetaileProgressViewModel(parameters) {
+    function detailedprogressViewModel(parameters) {
         var self = this;
 		
 		// assign the injected parameters, e.g.:
@@ -14,17 +14,17 @@ $(function() {
 		self.time_to_change = ko.observable();
 		
 		self.onBeforeBinding = function() {
-            self.time_to_change(self.settingsViewModel.settings.plugins.DetailedProgress.time_to_change());
+            self.time_to_change(self.settingsViewModel.settings.plugins.detailedprogress.time_to_change());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
-            self.time_to_change = self.settingsViewModel.settings.plugins.DetailedProgress.time_to_change();
+            self.time_to_change = self.settingsViewModel.settings.plugins.detailedprogress.time_to_change();
         };
     };
 
     // view model class, parameters for constructor, container to bind to
     ADDITIONAL_VIEWMODELS.push([
-        DetaileProgressViewModel,
+        detailedprogressViewModel,
 
         // e.g. loginStateViewModel, settingsViewModel, ...
         ["settingsViewModel"],
