@@ -97,15 +97,11 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def _get_host_ip(self):
 		return [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
-	##-- AssetPlugin 
-	
+	##-- AssetPlugin 	
 	def get_assets(self):
-			return dict(
-				js=["js/detailedprogress.js"]
-			)
+			return dict(js=["js/detailedprogress.js"])
 	
 	##~~ Settings
-
 	def get_settings_defaults(self):
 		return dict(
 			messages = [
@@ -118,13 +114,11 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			time_to_change = 10
 		)
 		
-	##-- Template hooks
-	
+	##-- Template hooks	
 	def get_template_configs(self):
-		return [dict(type="settings",custom_bindings=False)]
+		return [dict(type="settings",custom_bindings=True)]
 
 	##~~ Softwareupdate hook
-
 	def get_update_information(self):
 		return dict(
 			detailedprogress=dict(
