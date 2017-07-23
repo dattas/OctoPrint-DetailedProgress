@@ -9,16 +9,16 @@ $(function() {
         var self = this;
 		
 		// assign the injected parameters, e.g.:
-		self.settingsViewModel = parameters[0];
+		self.settings = parameters[0];
 		
 		self.time_to_change = ko.observable();
 		
 		self.onBeforeBinding = function() {
-            self.time_to_change(self.settingsViewModel.settings.plugins.detailedprogress.time_to_change());
+            self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
-            self.time_to_change = self.settingsViewModel.settings.plugins.detailedprogress.time_to_change();
+            self.time_to_change = self.settings.settings.plugins.detailedprogress.time_to_change();
         };
     };
 
