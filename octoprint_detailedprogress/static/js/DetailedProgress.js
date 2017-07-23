@@ -30,6 +30,6 @@ $(function() {
         ["settingsViewModel"],
 
         // e.g. #settings_plugin_DetailedProgress, #tab_plugin_DetailedProgress, ...
-        []
+        [{"#settings_plugin_DetailedProgress"}]
     ]);
 });
