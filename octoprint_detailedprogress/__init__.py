@@ -18,6 +18,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 	_etl_format = ""
 	_eta_strftime = ""
 	_messages = []
+	
 	def on_event(self, event, payload):
 		if event == Events.PRINT_STARTED:
 			self._logger.info("Printing started. Detailed progress started.")
