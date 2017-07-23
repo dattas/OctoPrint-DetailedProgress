@@ -117,7 +117,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 		
 	##-- Template hooks	
 	def get_template_configs(self):
-		return [dict(type="settings",custom_bindings=False)]
+		return [dict(type="settings",custom_bindings=True)]
 
 	##~~ Softwareupdate hook
 	def get_update_information(self):
