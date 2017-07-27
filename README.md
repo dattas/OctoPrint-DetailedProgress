@@ -19,15 +19,15 @@ plugins:
   detailedprogress:
     # Number of seconds (minimum) to rotate the messages
     time_to_change: 10
-    eta_strftime: "%H:%M:%S Day %d"
-    etl_format: "{hours:02d}:{minutes:02d}:{seconds:02d}"
+    eta_strftime: "%H %M %S Day %d"
+    etl_format: "{hours:02d}h{minutes:02d}m{seconds:02d}s"
     # Messages to display. Placeholders:
     # - completion : The % completed
     # - printTimeLeft : A string in the format "HH:MM:SS" with how long the print still has left
     # - ETA : The date and time formatted in "%H:%M:%S Day %d" that the print is estimated to be completed
     # - filepos: The current position in the file currently being printed
     messages:
-      - "{completion:.2f}% complete"
-      - "ETL: {printTimeLeft}"
-      - "ETA: {ETA}"
+      - "{completion:.2f}p complete"
+      - "ETL {printTimeLeft}"
+      - "ETA {ETA}"
 ```
