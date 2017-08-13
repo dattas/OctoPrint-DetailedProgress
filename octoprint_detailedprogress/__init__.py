@@ -109,7 +109,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 	
 	##~~ Settings
 	def get_settings_defaults(self):
-		return dict(time_to_change = "10")
+		return dict(time_to_change="10",eta_strftime="%H:%M:%S Day %d",etl_format="{hours:02d}:{minutes:02d}:{seconds:02d}")
 		
 	##-- Template hooks	
 	def get_template_configs(self):

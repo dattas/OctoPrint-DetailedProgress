@@ -12,13 +12,19 @@ $(function() {
 		self.settings = parameters[0];
 		
 		self.time_to_change = ko.observable();
+		self.eta_strftime = ko.observable();
+		self.etl_format = ko.observable();
 		
 		self.onBeforeBinding = function() {
             self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
+            self.eta_strftime(self.settings.settings.plugins.detailedprogress.eta_strftime());
+            self.etl_format(self.settings.settings.plugins.detailedprogress.etl_format());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
             self.time_to_change = self.settings.settings.plugins.detailedprogress.time_to_change();
+            self.eta_strftime = self.settings.settings.plugins.detailedprogress.eta_strftime();
+            self.etl_format = self.settings.settings.plugins.detailedprogress.etl_format();
         };
     };
 
