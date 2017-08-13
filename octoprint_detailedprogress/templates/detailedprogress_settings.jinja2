@@ -23,6 +23,9 @@ Configure which messages to display and message rotation time.
 		<label class="control-label">{{ _('Messages') }}</label>
 		<div class="controls">
 			<select multiple="multiple" height="5" data-bind="options:settings.plugins.detailedprogress.allmessages, selectedOptions:settings.plugins.detailedprogress.messages"> </select>
+			<input type="text" data-bind='value:settings.plugins.detailedprogress.msgToAdd, valueUpdate: "afterkeydown"' />
+			<button data-bind="click: settings.plugins.detailedprogress.addMsg, enable: settings.plugins.detailedprogress.msgToAdd().length > 0">Add</button>		
+			<button data-bind="click: settings.plugins.detailedprogress.removeSelected, enable: settings.plugins.detailedprogress.messages.length > 0">Remove</button>
 		</div>
 	</div>
 </form>
