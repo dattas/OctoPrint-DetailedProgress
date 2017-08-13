@@ -14,18 +14,34 @@ $(function() {
 		self.time_to_change = ko.observable();
 		self.eta_strftime = ko.observable();
 		self.etl_format = ko.observable();
+		self.allmessages = ko.obserablearray(['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}']);
+		self.messages = ko.obserablearray();
+		self.msgToAdd = ko.observable();
 		
 		self.onBeforeBinding = function() {
             self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
             self.eta_strftime(self.settings.settings.plugins.detailedprogress.eta_strftime());
             self.etl_format(self.settings.settings.plugins.detailedprogress.etl_format());
+			self.messages(self.settings.settings.plugins.detailedprogress.messages());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
             self.time_to_change = self.settings.settings.plugins.detailedprogress.time_to_change();
             self.eta_strftime = self.settings.settings.plugins.detailedprogress.eta_strftime();
             self.etl_format = self.settings.settings.plugins.detailedprogress.etl_format();
+			self.messages = self.settings.settings.plugins.detailedprogress.messages();
         };
+		
+		self.addMsg = function () {
+			if ((self.msgToAdd() != "") && (self.allmessages.indexOf(self.msgToAdd()) < 0)) // Prevent blanks and duplicates
+				self.allmessages.push(self.msgToAdd());
+			self.msgToAdd(""); // Clear the text box
+		};
+	 
+		self.removeSelected = function () {
+			self.allmessages.removeAll(self.messages());
+			self.messages([]); // Clear selection
+		};
     };
 
     // view model class, parameters for constructor, container to bind to

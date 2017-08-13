@@ -19,4 +19,11 @@ Configure which messages to display and message rotation time.
 			<input type="text" class="input-block-level" data-bind="value: settings.plugins.detailedprogress.etl_format">
 		</div>
 	</div>
+	<div class="control-group">
+		<label class="control-label">{{ _('Messages') }}</label>
+		Add item: <input type="text" data-bind='value:msgToAdd, valueUpdate: "afterkeydown"' />
+		<button data-bind="click: addMsg, enable: msgToAdd().length > 0">Add</button>
+		<select multiple="multiple" height="5" data-bind="options:settings.plugins.detailedprogress.allmessages, selectedOptions:settings.plugins.detailedprogress.messages"> </select>
+		<button data-bind="click: removeSelected, enable: settings.plugins.detailedprogress.messages.length > 0">Remove</button>
+	</div>
 </form>
