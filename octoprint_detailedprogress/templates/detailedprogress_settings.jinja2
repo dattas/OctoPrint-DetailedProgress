@@ -29,7 +29,7 @@ Configure which messages to display and message rotation time.
 <div class="control-group">
 	<div class="controls">
 		<input type="text" data-bind='value:settings.plugins.detailedprogress.msgToAdd, valueUpdate: "afterkeydown"' />
-		<button data-bind="click: settings.plugins.detailedprogress.addMsg">Add</button>		
+		<button data-bind="click: addMsg">Add</button>		
 		<button data-bind="click: settings.plugins.detailedprogress.removeSelected, enable: settings.plugins.detailedprogress.messages.length > 0">Remove</button>
 	</div>
 </div>
