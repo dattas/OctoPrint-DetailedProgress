@@ -16,7 +16,7 @@ $(function() {
 		self.etl_format = ko.observable();
 		self.allmessages = ko.obserablearray(['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}']);
 		self.messages = ko.obserablearray();
-		self.msgToAdd = ko.observable();
+		self.msgToAdd = ko.observable("");
 		
 		self.onBeforeBinding = function() {
             self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
