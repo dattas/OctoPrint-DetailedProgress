@@ -16,7 +16,7 @@ $(function() {
 		self.etl_format = ko.observable();
 		self.allmessages = ko.observableArray();
 		self.messages = ko.observableArray();
-		self.msgToAdd = ko.observable("");
+		self.msgToAdd = ko.observable();
 		
 		self.onBeforeBinding = function() {
             self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
@@ -24,6 +24,7 @@ $(function() {
             self.etl_format(self.settings.settings.plugins.detailedprogress.etl_format());
 			self.messages(self.settings.settings.plugins.detailedprogress.messages());
 			self.allmessages(self.settings.settings.plugins.detailedprogress.allmessages());
+			self.msgToAdd(self.settings.settings.plugins.detailedprogress.msgToAdd());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
@@ -32,6 +33,7 @@ $(function() {
             self.etl_format = self.settings.settings.plugins.detailedprogress.etl_format();
 			self.messages = self.settings.settings.plugins.detailedprogress.messages();
 			self.allmessages = self.settings.settings.plugins.detailedprogress.allmessages();
+			self.msgToAdd = self.settings.settings.plugins.detailedprogress.msgToAdd();
         };
 		
 		self.addMsg = function () {
