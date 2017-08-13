@@ -14,8 +14,8 @@ $(function() {
 		self.time_to_change = ko.observable();
 		self.eta_strftime = ko.observable();
 		self.etl_format = ko.observable();
-		self.allmessages = ko.obserablearray(['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}']);
-		self.messages = ko.obserablearray();
+		self.allmessages = ko.observablearray(['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}']);
+		self.messages = ko.observablearray();
 		self.msgToAdd = ko.observable("");
 		
 		self.onBeforeBinding = function() {
