@@ -14,7 +14,7 @@ $(function() {
 		self.time_to_change = ko.observable();
 		self.eta_strftime = ko.observable();
 		self.etl_format = ko.observable();
-		self.allmessages = ko.observablearray(['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}']);
+		self.allmessages = ko.observablearray();
 		self.messages = ko.observablearray();
 		self.msgToAdd = ko.observable("");
 		
@@ -23,6 +23,7 @@ $(function() {
             self.eta_strftime(self.settings.settings.plugins.detailedprogress.eta_strftime());
             self.etl_format(self.settings.settings.plugins.detailedprogress.etl_format());
 			self.messages(self.settings.settings.plugins.detailedprogress.messages());
+			self.allmessages(self.settings.settings.plugins.detailedprogress.allmessages());
         };
 		
 		self.onEventSettingsUpdated = function (payload) {            
@@ -30,6 +31,7 @@ $(function() {
             self.eta_strftime = self.settings.settings.plugins.detailedprogress.eta_strftime();
             self.etl_format = self.settings.settings.plugins.detailedprogress.etl_format();
 			self.messages = self.settings.settings.plugins.detailedprogress.messages();
+			self.allmessages = self.settings.settings.plugins.detailedprogress.allmessages();
         };
 		
 		self.addMsg = function () {
