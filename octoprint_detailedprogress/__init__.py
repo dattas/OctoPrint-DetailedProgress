@@ -8,14 +8,18 @@ import octoprint.util
 import traceback
 from octoprint.events import Events
 
-class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
-                             octoprint.plugin.SettingsPlugin):
+class detailedprogress(octoprint.plugin.EventHandlerPlugin,
+                             octoprint.plugin.SettingsPlugin,
+							 octoprint.plugin.TemplatePlugin,
+							 octoprint.plugin.AssetPlugin,
+							 octoprint.plugin.StartupPlugin):
 	_last_updated = 0.0
 	_last_message = 0
 	_repeat_timer = None
 	_etl_format = ""
 	_eta_strftime = ""
 	_messages = []
+	
 	def on_event(self, event, payload):
 		if event == Events.PRINT_STARTED:
 			self._logger.info("Printing started. Detailed progress started.")
@@ -95,22 +99,23 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def _get_host_ip(self):
 		return [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
+	##~~ StartupPlugin
+	def on_after_startup(self):
+		self._logger.info("OctoPrint-DetailedProgress loaded!")	
+		
+	##-- AssetPlugin 	
+	def get_assets(self):
+			return dict(js=["js/detailedprogress.js"])
+	
 	##~~ Settings
-
 	def get_settings_defaults(self):
-		return dict(
-			messages = [
-				"{completion:.2f}p  complete",
-				"ETL {printTimeLeft}",
-				"ETA {ETA}"
-			],
-			eta_strftime = "%H %M %S Day %d",
-			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
-			time_to_change = 10
-		)
+		return dict(time_to_change="10",eta_strftime="%H:%M:%S Day %d",etl_format="{hours:02d}:{minutes:02d}:{seconds:02d}",allmessages=['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}'],messages=['{completion:.2f}% complete','ETL: {printTimeLeft}','ETA: {ETA}'],msgToAdd="")
+		
+	##-- Template hooks	
+	def get_template_configs(self):
+		return [dict(type="settings",custom_bindings=False)]
 
 	##~~ Softwareupdate hook
-
 	def get_update_information(self):
 		return dict(
 			detailedprogress=dict(
@@ -132,7 +137,7 @@ __plugin_name__ = "Detailed Progress Plugin"
 
 def __plugin_load__():
 	global __plugin_implementation__
-	__plugin_implementation__ = DetailedProgressPlugin()
+	__plugin_implementation__ = detailedprogress()
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
