@@ -105,7 +105,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 		
 	##-- AssetPlugin 	
 	def get_assets(self):
-			return dict(js=["js/detailedprogress.js"])
+			return dict(js=["js/detailedprogress.js"],css=["css/detailedprogress.css"])
 	
 	##~~ Settings
 	def get_settings_defaults(self):
