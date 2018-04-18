@@ -59,6 +59,22 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 
 		currentData["progress"]["printTimeLeftString"] = "No ETL yet"
 		currentData["progress"]["ETA"] = "No ETA yet"
+		accuracy = currentData["progress"]["printTimeLeftOrigin"]
+		if accuracy:
+			if accuracy == "estimate":
+				accuracy = "Best"
+			elif accuracy == "average":
+				accuracy = "Good"
+			elif accuracy == "analysis" or accuracy.startswith("mixed"):
+				accuracy = "Medium"
+			elif accuracy == "linear":
+				accuracy = "Bad"
+			else:
+				accuracy = "ERR"
+				self._logger.debug("Caught unmapped accuracy value: {0}".format(accuracy))
+		else:
+			accuracy = "N/A"
+		currentData["progress"]["accuracy"] = accuracy
 
 		#Add additional data
 		try:
@@ -78,7 +94,8 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			completion = currentData["progress"]["completion"],
 			printTimeLeft = currentData["progress"]["printTimeLeftString"],
 			ETA = currentData["progress"]["ETA"],
-			filepos = currentData["progress"]["filepos"]
+			filepos = currentData["progress"]["filepos"],
+			accuracy = currentData["progress"]["accuracy"],
 		)
 
 	def _get_time_from_seconds(self, seconds):
@@ -102,7 +119,8 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			messages = [
 				"{completion:.2f}p  complete",
 				"ETL {printTimeLeft}",
-				"ETA {ETA}"
+				"ETA {ETA}",
+				"{accuracy} accuracy"
 			],
 			eta_strftime = "%H %M %S Day %d",
 			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
