@@ -117,13 +117,13 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def get_settings_defaults(self):
 		return dict(
 			messages = [
-				"{completion:.2f}p  complete",
+				"{completion:.2f}%% complete",
 				"ETL {printTimeLeft}",
 				"ETA {ETA}",
 				"{accuracy} accuracy"
 			],
-			eta_strftime = "%H %M %S Day %d",
-			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
+			eta_strftime = "%H:%M:%S Day %d",
+			etl_format = "{hours:02d}:{minutes:02d}:{seconds:02d}",
 			time_to_change = 10
 		)
 
