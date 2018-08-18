@@ -51,12 +51,13 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
 			if self._M73:
+				progressPerc = int(currentData["progress"]["completion"])
 				if self._PrusaStyle:
 					printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
-					self._printer.commands("M73 P{}".format(currentData["progress"]["completion"],printMinutesLeft))
-					self._printer.commands("M73 Q{}".format(currentData["progress"]["completion"],printMinutesLeft))
+					self._printer.commands("M73 P{} R{}".format(progressPerc,printMinutesLeft))
+					self._printer.commands("M73 Q{} S{}".format(progressPerc,printMinutesLeft))
 				else:
-					self._printer.commands("M73 P{}".format(currentData["progress"]["completion"]))
+					self._printer.commands("M73 P{}".format(progressPerc))
 				
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
