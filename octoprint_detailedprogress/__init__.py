@@ -48,8 +48,9 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			self._printer.commands("M117 {}".format(message))
 			if use_M73:
 				if M73_PrusaStyle:
-					self._printer.commands("M73 P{}".format(currentData["progress"]["completion"]))
-					self._printer.commands("M73 Q{}".format(currentData["progress"]["completion"]))
+					printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
+					self._printer.commands("M73 P{}".format(currentData["progress"]["completion"],printMinutesLeft))
+					self._printer.commands("M73 Q{}".format(currentData["progress"]["completion"],printMinutesLeft))
 				else:
 					self._printer.commands("M73 P{}".format(currentData["progress"]["completion"]))
 				
