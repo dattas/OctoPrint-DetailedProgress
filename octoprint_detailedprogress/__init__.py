@@ -133,8 +133,8 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			eta_strftime = "%H %M %S Day %d",
 			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
 			time_to_change = 10,
-			use_M73 = false,
-			M73_PrusaStyle = false
+			use_M73 = False,
+			M73_PrusaStyle = False
 		)
 
 	##~~ Softwareupdate hook
