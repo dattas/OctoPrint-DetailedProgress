@@ -23,7 +23,7 @@ plugins:
     etl_format: "{hours:02d}:{minutes:02d}:{seconds:02d}"
     # Send M73 progress commands 
     use_M73: true
-    # M73 commands syntax specific for Prusa Firmware (>3.3.1)
+    # M73 commands syntax specific for Prusa Firmware (>=3.3.0)
     M73_PrusaStyle: true
     # Messages to display. Placeholders:
     # - completion : The % completed
