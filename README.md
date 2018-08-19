@@ -4,6 +4,7 @@ A plugin that sends M117 (and optionally M73) commands to the printer to display
 ![Example ETA](https://i.imgur.com/ocBp152.jpg)
 ![Example ETL](https://i.imgur.com/oJiMm2p.jpg)
 ![Example Percent](https://i.imgur.com/McaCNsx.jpg)
+![Example M73 Prusa](https://i.imgur.com/C1zeANH.jpg)
 
 ## Setup
 
