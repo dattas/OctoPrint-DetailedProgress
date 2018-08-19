@@ -16,12 +16,16 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	_etl_format = ""
 	_eta_strftime = ""
 	_messages = []
+	_M73 = False
+	_PrusaStyle = False
 	def on_event(self, event, payload):
 		if event == Events.PRINT_STARTED:
 			self._logger.info("Printing started. Detailed progress started.")
 			self._etl_format = self._settings.get(["etl_format"])
 			self._eta_strftime = self._settings.get(["eta_strftime"])
 			self._messages = self._settings.get(["messages"])
+			self._M73 = self._settings.get(["use_M73"])
+			self._PrusaStyle = self._settings.get(["M73_PrusaStyle"])
 			self._repeat_timer = octoprint.util.RepeatedTimer(self._settings.get_int(["time_to_change"]), self.do_work)
 			self._repeat_timer.start()
 		elif event in (Events.PRINT_DONE, Events.PRINT_FAILED, Events.PRINT_CANCELLED):
@@ -46,6 +50,15 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
+			if self._M73:
+				progressPerc = int(currentData["progress"]["completion"])
+				if self._PrusaStyle:
+					printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
+					self._printer.commands("M73 P{} R{}".format(progressPerc,printMinutesLeft))
+					self._printer.commands("M73 Q{} S{}".format(progressPerc,printMinutesLeft))
+				else:
+					self._printer.commands("M73 P{}".format(progressPerc))
+				
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 
@@ -124,7 +137,9 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			],
 			eta_strftime = "%H %M %S Day %d",
 			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
-			time_to_change = 10
+			time_to_change = 10,
+			use_M73 = False,
+			M73_PrusaStyle = False
 		)
 
 	##~~ Softwareupdate hook
