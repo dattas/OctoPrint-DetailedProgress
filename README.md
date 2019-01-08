@@ -26,6 +26,7 @@ plugins:
     # - printTimeLeft : A string in the format "HH:MM:SS" with how long the print still has left
     # - ETA : The date and time formatted in "%H:%M:%S Day %d" that the print is estimated to be completed
     # - filepos: The current position in the file currently being printed
+    # - accuracy: Accuracy of the time estimates
     messages:
       - "{completion:.2f}% complete"
       - "ETL: {printTimeLeft}"
