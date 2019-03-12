@@ -19,6 +19,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def on_event(self, event, payload):
 		if event == Events.PRINT_STARTED:
 			self._logger.info("Printing started. Detailed progress started.")
+			self._printer.commands("M73 P0")
 			self._etl_format = self._settings.get(["etl_format"])
 			self._eta_strftime = self._settings.get(["eta_strftime"])
 			self._messages = self._settings.get(["messages"])
@@ -30,6 +31,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 				self._repeat_timer = None
 			self._logger.info("Printing stopped. Detailed progress stopped.")
 			self._printer.commands("M117 Print Done")
+			self._printer.commands("M73 P100")
 		elif event == Events.CONNECTED:
 			ip = self._get_host_ip()
 			if not ip:
@@ -46,6 +48,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
+			self._printer.commands("M73 P%d" % currentData["progress"]["completion"])
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 
