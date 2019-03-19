@@ -5,6 +5,9 @@ A plugin that sends M117 commands to the printer to display the progress of the 
 ![Example ETL](https://i.imgur.com/oJiMm2p.jpg)
 ![Example Percent](https://i.imgur.com/McaCNsx.jpg)
 
+If the firmware supports the M73 command (Marlin configuration option `LCD_SET_PROGRESS_MANUALLY`), this plugins also updates the progress bar on the display:
+![Example progress bar](https://i.imgur.com/NxD4Pzl.jpg)
+
 ## Setup
 
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
