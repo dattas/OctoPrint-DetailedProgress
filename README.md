@@ -7,10 +7,9 @@ A plugin that sends M117 commands to the printer to display the progress of the 
 
 ## Setup
 
-Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
-or manually using this URL:
+Install via manually using this URL:
 
-    https://github.com/dattas/OctoPrint-DetailedProgress/archive/master.zip
+    https://github.com/eiannone/OctoPrint-DetailedProgress/archive/master.zip
 
 ## Configuration
 
@@ -23,6 +22,7 @@ plugins:
     etl_format: "{hours:02d}:{minutes:02d}:{seconds:02d}"
     # Messages to display. Placeholders:
     # - completion : The % completed
+    # - printTime : A string in the format "HH:MM:SS" with how long the print is going
     # - printTimeLeft : A string in the format "HH:MM:SS" with how long the print still has left
     # - ETA : The date and time formatted in "%H:%M:%S Day %d" that the print is estimated to be completed
     # - filepos: The current position in the file currently being printed
