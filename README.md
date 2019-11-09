@@ -7,7 +7,7 @@ A plugin that sends M117 commands to the printer to display the progress of the 
 
 ## Setup
 
-Install via manually using this URL:
+Install manually using this URL:
 
     https://github.com/eiannone/OctoPrint-DetailedProgress/archive/master.zip
 

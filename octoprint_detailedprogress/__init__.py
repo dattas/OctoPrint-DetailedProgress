@@ -9,7 +9,7 @@ import traceback
 from octoprint.events import Events
 
 
-class detailedprogress(octoprint.plugin.EventHandlerPlugin,
+class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 					   octoprint.plugin.SettingsPlugin,
 					   octoprint.plugin.TemplatePlugin,
 					   octoprint.plugin.AssetPlugin,
@@ -19,6 +19,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 	_repeat_timer = None
 	_etl_format = ""
 	_eta_strftime = ""
+	_all_messages = []
 	_messages = []
 
 	def on_event(self, event, payload):
@@ -26,6 +27,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 			self._logger.info("Printing started. Detailed progress started.")
 			self._etl_format = self._settings.get(["etl_format"])
 			self._eta_strftime = self._settings.get(["eta_strftime"])
+			self._all_messages = self._settings.get(["all_messages"])
 			self._messages = self._settings.get(["messages"])
 			self._repeat_timer = octoprint.util.RepeatedTimer(self._settings.get_int(["time_to_change"]), self.do_work)
 			self._repeat_timer.start()
@@ -131,7 +133,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 
 	##-- AssetPlugin
 	def get_assets(self):
-		return dict(js=["js/detailedprogress.js"], css=["css/detailedprogress.css"])
+		return dict(js=["js/DetailedProgress.js"], css=["css/detailedprogress.css"])
 
 	##~~ Settings
 	def get_settings_defaults(self):
@@ -140,7 +142,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 			eta_strftime="%H:%M:%S Day %d",
 			etl_format="{hours:02d}:{minutes:02d}:{seconds:02d}",
 			print_done_message="Print Done",
-			allmessages=[
+			all_messages=[
 				'{filename}',
 				'{completion:.2f}%% complete',
 				'ETL: {printTimeLeft}',
@@ -152,8 +154,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 				'ETL: {printTimeLeft}',
 				'ETA: {ETA}',
 				'{accuracy} accuracy'
-			],
-			msgToAdd=""
+			]
 		)
 
 	##-- Template hooks
@@ -179,12 +180,12 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 		)
 
 
-__plugin_name__ = "Detailed Progress Plugin"
+__plugin_name__ = "Detailed Progress"
 
 
 def __plugin_load__():
 	global __plugin_implementation__
-	__plugin_implementation__ = detailedprogress()
+	__plugin_implementation__ = DetailedProgress()
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
