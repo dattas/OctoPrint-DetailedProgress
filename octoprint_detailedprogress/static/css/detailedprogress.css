@@ -1,0 +1,4 @@
+div#settings_plugin_detailedprogress select[multiple] {
+    background-color: inherit;
+    color: inherit;
+}
