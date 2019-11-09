@@ -29,7 +29,8 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 				self._repeat_timer.cancel()
 				self._repeat_timer = None
 			self._logger.info("Printing stopped. Detailed progress stopped.")
-			self._printer.commands("M117 Print Done")
+			message = self._settings.get(["print_done_message"])
+			self._printer.commands("M117 {}".format(message))
 		elif event == Events.CONNECTED:
 			ip = self._get_host_ip()
 			if not ip:
@@ -75,6 +76,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 		else:
 			accuracy = "N/A"
 		currentData["progress"]["accuracy"] = accuracy
+		currentData["progress"]["filename"] = currentData["job"]["file"]["name"]
 
 		#Add additional data
 		try:
@@ -96,6 +98,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			ETA = currentData["progress"]["ETA"],
 			filepos = currentData["progress"]["filepos"],
 			accuracy = currentData["progress"]["accuracy"],
+			filename = currentData["progress"]["filename"]
 		)
 
 	def _get_time_from_seconds(self, seconds):
@@ -117,6 +120,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 	def get_settings_defaults(self):
 		return dict(
 			messages = [
+				"{filename}",
 				"{completion:.2f}p  complete",
 				"ETL {printTimeLeft}",
 				"ETA {ETA}",
@@ -124,6 +128,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			],
 			eta_strftime = "%H %M %S Day %d",
 			etl_format = "{hours:02d}h{minutes:02d}m{seconds:02d}s",
+			print_done_message = "Print Done",
 			time_to_change = 10
 		)
 
