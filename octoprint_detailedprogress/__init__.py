@@ -8,11 +8,12 @@ import octoprint.util
 import traceback
 from octoprint.events import Events
 
+
 class detailedprogress(octoprint.plugin.EventHandlerPlugin,
-                             octoprint.plugin.SettingsPlugin,
-							 octoprint.plugin.TemplatePlugin,
-							 octoprint.plugin.AssetPlugin,
-							 octoprint.plugin.StartupPlugin):
+					   octoprint.plugin.SettingsPlugin,
+					   octoprint.plugin.TemplatePlugin,
+					   octoprint.plugin.AssetPlugin,
+					   octoprint.plugin.StartupPlugin):
 	_last_updated = 0.0
 	_last_message = 0
 	_repeat_timer = None
@@ -29,7 +30,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 			self._repeat_timer = octoprint.util.RepeatedTimer(self._settings.get_int(["time_to_change"]), self.do_work)
 			self._repeat_timer.start()
 		elif event in (Events.PRINT_DONE, Events.PRINT_FAILED, Events.PRINT_CANCELLED):
-			if self._repeat_timer != None:
+			if self._repeat_timer is not None:
 				self._repeat_timer.cancel()
 				self._repeat_timer = None
 			self._logger.info("Printing stopped. Detailed progress stopped.")
@@ -43,7 +44,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 
 	def do_work(self):
 		if not self._printer.is_printing():
-			#we have nothing to do here
+			# we have nothing to do here
 			return
 		try:
 			currentData = self._printer.get_current_data()
@@ -52,14 +53,14 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
 		except Exception as e:
-			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
+			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e, traceback.format_exc()))
 
 	def _sanitize_current_data(self, currentData):
-		if (currentData["progress"]["printTimeLeft"] == None):
+		if currentData["progress"]["printTimeLeft"] is None:
 			currentData["progress"]["printTimeLeft"] = currentData["job"]["estimatedPrintTime"]
-		if (currentData["progress"]["filepos"] == None):
+		if currentData["progress"]["filepos"] is None:
 			currentData["progress"]["filepos"] = 0
-		if (currentData["progress"]["printTime"] == None):
+		if currentData["progress"]["printTime"] is None:
 			currentData["progress"]["printTime"] = currentData["job"]["estimatedPrintTime"]
 
 		currentData["progress"]["printTimeLeftString"] = "No ETL yet"
@@ -82,29 +83,29 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 		currentData["progress"]["accuracy"] = accuracy
 		currentData["progress"]["filename"] = currentData["job"]["file"]["name"]
 
-		#Add additional data
+		# Add additional data
 		try:
 			currentData["progress"]["printTimeString"] = self._get_time_from_seconds(currentData["progress"]["printTime"])
 			currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(currentData["progress"]["printTimeLeft"])
 			currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(time.time() + currentData["progress"]["printTimeLeft"]))
 		except Exception as e:
-			self._logger.debug("Caught an exception trying to parse data: {0}\n Error is: {1}\nTraceback:{2}".format(currentData,e,traceback.format_exc()))
+			self._logger.debug("Caught an exception trying to parse data: {0}\n Error is: {1}\nTraceback:{2}".format(currentData, e, traceback.format_exc()))
 
 		return currentData
 
 	def _get_next_message(self, currentData):
 		message = self._messages[self._last_message]
 		self._last_message += 1
-		if (self._last_message >= len(self._messages)):
+		if self._last_message >= len(self._messages):
 			self._last_message = 0
 		return message.format(
-			completion = currentData["progress"]["completion"],
-			printTime = currentData["progress"]["printTimeString"],
-			printTimeLeft = currentData["progress"]["printTimeLeftString"],
-			ETA = currentData["progress"]["ETA"],
-			filepos = currentData["progress"]["filepos"],
-			accuracy = currentData["progress"]["accuracy"],
-			filename = currentData["progress"]["filename"]
+			completion=currentData["progress"]["completion"],
+			printTime=currentData["progress"]["printTimeString"],
+			printTimeLeft=currentData["progress"]["printTimeLeftString"],
+			ETA=currentData["progress"]["ETA"],
+			filepos=currentData["progress"]["filepos"],
+			accuracy=currentData["progress"]["accuracy"],
+			filename=currentData["progress"]["filename"]
 		)
 
 	def _get_time_from_seconds(self, seconds):
@@ -119,7 +120,10 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 		return self._etl_format.format(**locals())
 
 	def _get_host_ip(self):
-		return [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
+		return [l for l in (
+			[ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [
+				[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
+				 [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
 	##~~ StartupPlugin
 	def on_after_startup(self):
@@ -127,7 +131,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 
 	##-- AssetPlugin
 	def get_assets(self):
-			return dict(js=["js/detailedprogress.js"],css=["css/detailedprogress.css"])
+		return dict(js=["js/detailedprogress.js"], css=["css/detailedprogress.css"])
 
 	##~~ Settings
 	def get_settings_defaults(self):
@@ -154,7 +158,7 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 
 	##-- Template hooks
 	def get_template_configs(self):
-		return [dict(type="settings",custom_bindings=False)]
+		return [dict(type="settings", custom_bindings=False)]
 
 	##~~ Softwareupdate hook
 	def get_update_information(self):
@@ -174,7 +178,9 @@ class detailedprogress(octoprint.plugin.EventHandlerPlugin,
 			)
 		)
 
+
 __plugin_name__ = "Detailed Progress Plugin"
+
 
 def __plugin_load__():
 	global __plugin_implementation__
@@ -184,4 +190,3 @@ def __plugin_load__():
 	__plugin_hooks__ = {
 		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
 	}
-
