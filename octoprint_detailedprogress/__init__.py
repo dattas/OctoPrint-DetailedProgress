@@ -78,6 +78,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 
 		#Add additional data
 		try:
+			currentData["progress"]["printTimeString"] = self._get_time_from_seconds(currentData["progress"]["printTime"])
 			currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(currentData["progress"]["printTimeLeft"])
 			currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(time.time() + currentData["progress"]["printTimeLeft"]))
 		except Exception as e:
@@ -92,6 +93,7 @@ class DetailedProgressPlugin(octoprint.plugin.EventHandlerPlugin,
 			self._last_message = 0
 		return message.format(
 			completion = currentData["progress"]["completion"],
+			printTime = currentData["progress"]["printTimeString"],
 			printTimeLeft = currentData["progress"]["printTimeLeftString"],
 			ETA = currentData["progress"]["ETA"],
 			filepos = currentData["progress"]["filepos"],
