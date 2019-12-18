@@ -15,7 +15,7 @@ $(function() {
     self.eta_strftime = ko.observable();
     self.etl_format = ko.observable();
     self.print_done_message = ko.observable();
-    self.use_m73 = ko.observable();
+    self.use_M73 = ko.observable();
     self.all_messages = ko.observableArray();
     self.messages = ko.observableArray();
 
@@ -23,7 +23,7 @@ $(function() {
       self.time_to_change(self.settings.settings.plugins.detailedprogress.time_to_change());
       self.eta_strftime(self.settings.settings.plugins.detailedprogress.eta_strftime());
       self.etl_format(self.settings.settings.plugins.detailedprogress.etl_format());
-      self.use_m73(self.settings.settings.plugins.detailedprogress.use_m73());
+      self.use_M73(self.settings.settings.plugins.detailedprogress.use_M73());
       self.print_done_message(self.settings.settings.plugins.detailedprogress.print_done_message());
       self.messages(self.settings.settings.plugins.detailedprogress.messages());
       self.all_messages(self.settings.settings.plugins.detailedprogress.all_messages());
@@ -33,6 +33,7 @@ $(function() {
       self.time_to_change = self.settings.settings.plugins.detailedprogress.time_to_change();
       self.eta_strftime = self.settings.settings.plugins.detailedprogress.eta_strftime();
       self.etl_format = self.settings.settings.plugins.detailedprogress.etl_format();
+      self.use_M73 = self.settings.settings.plugins.detailedprogress.use_M73();
       self.print_done_message = self.settings.settings.plugins.detailedprogress.print_done_message();
       self.messages = self.settings.settings.plugins.detailedprogress.messages();
       self.all_messages = self.settings.settings.plugins.detailedprogress.all_messages();
