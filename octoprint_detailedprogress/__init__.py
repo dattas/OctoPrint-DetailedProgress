@@ -159,7 +159,7 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			M73_PrusaStyle = False,
 			all_messages=[
 				'{filename}',
-				'{completion:.2f}%% complete',
+				'{completion:.2f}% complete',
 				'ETL: {printTimeLeft}',
 				'ETA: {ETA}',
 				'{accuracy} accuracy'
