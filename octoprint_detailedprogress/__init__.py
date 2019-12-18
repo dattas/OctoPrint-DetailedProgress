@@ -155,7 +155,7 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			eta_strftime="%H:%M:%S Day %d",
 			etl_format="{hours:02d}:{minutes:02d}:{seconds:02d}",
 			print_done_message="Print Done",
-			use_M73 = False,
+			use_M73 = True,
 			M73_PrusaStyle = False,
 			all_messages=[
 				'{filename}',
