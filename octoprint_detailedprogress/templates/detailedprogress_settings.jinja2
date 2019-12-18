@@ -1,0 +1,42 @@
+<h4>Detailed Progress Plugin settings</h4>
+<p>Configure which messages to display and message rotation time.</p>
+<form class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label">{{ _('Rotation time in seconds') }}</label>
+		<div class="controls">
+			<input type="text" class="input-block-level" data-bind="value: settings.plugins.detailedprogress.time_to_change" size="10">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">{{ _('eta_strftime') }}</label>
+		<div class="controls">
+			<input type="text" class="input-block-level" data-bind="value: settings.plugins.detailedprogress.eta_strftime">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">{{ _('etl_format') }}</label>
+		<div class="controls">
+			<input type="text" class="input-block-level" data-bind="value: settings.plugins.detailedprogress.etl_format">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">{{ _('Print done message') }}</label>
+		<div class="controls">
+			<input type="text" class="input-block-level" data-bind="value: settings.plugins.detailedprogress.print_done_message">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">{{ _('Active messages') }}</label>
+		<div class="controls">
+			<select multiple="multiple" size="6" id="dtPrg_selMsg"
+                    data-bind="options:settings.plugins.detailedprogress.all_messages, selectedOptions:settings.plugins.detailedprogress.messages"></select>
+		</div>
+		<div class="controls">
+			<button class="btn" id="dtPrg_removeSelected">{{ _('Delete selected') }}</button>
+		</div>
+		<div class="controls">
+			<input type="text" id="dtPrg_msgToAdd">
+			<button class="btn" id="dtPrg_addMsg">{{ _('Add message') }}</button>
+		</div>
+	</div>
+</form>

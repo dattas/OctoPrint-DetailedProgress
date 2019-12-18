@@ -8,10 +8,9 @@ A plugin that sends M117 (and optionally M73) commands to the printer to display
 
 ## Setup
 
-Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
-or manually using this URL:
+Install manually using this URL:
 
-    https://github.com/dattas/OctoPrint-DetailedProgress/archive/master.zip
+    https://github.com/eiannone/OctoPrint-DetailedProgress/archive/master.zip
 
 ## Configuration
 
@@ -28,11 +27,15 @@ plugins:
     M73_PrusaStyle: true
     # Messages to display. Placeholders:
     # - completion : The % completed
+    # - printTime : A string in the format "HH:MM:SS" with how long the print is going
     # - printTimeLeft : A string in the format "HH:MM:SS" with how long the print still has left
     # - ETA : The date and time formatted in "%H:%M:%S Day %d" that the print is estimated to be completed
     # - filepos: The current position in the file currently being printed
+    # - filename: The filename of file currently being printed
+    # - accuracy: Accuracy of the time estimates
     messages:
       - "{completion:.2f}% complete"
       - "ETL: {printTimeLeft}"
       - "ETA: {ETA}"
+    print_done_message: "Print Done"
 ```
