@@ -164,6 +164,12 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 				'ETA: {ETA}',
 				'{accuracy} accuracy'
 			],
+                        messages=[
+				'{completion:.2f}% complete',
+				'ETL: {printTimeLeft}',
+				'ETA: {ETA}',
+				'{accuracy} accuracy'
+                        ]
 		)
 
 	##-- Template hooks
