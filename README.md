@@ -10,7 +10,7 @@ A plugin that sends M117 (and optionally M73) commands to the printer to display
 
 Install manually using this URL:
 
-    https://github.com/eiannone/OctoPrint-DetailedProgress/archive/master.zip
+    https://github.com/tpmullan/OctoPrint-DetailedProgress/archive/master.zip
 
 ## Configuration
 

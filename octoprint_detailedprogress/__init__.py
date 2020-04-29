@@ -185,12 +185,12 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 
 				# version check: github repository
 				type="github_release",
-				user="eiannone",
+				user="tpmullan",
 				repo="OctoPrint-DetailedProgress",
 				current=self._plugin_version,
 
 				# update method: pip
-				pip="https://github.com/eiannone/OctoPrint-DetailedProgress/archive/{target_version}.zip"
+				pip="https://github.com/tpmullan/OctoPrint-DetailedProgress/archive/{target_version}.zip"
 			)
 		)
 
