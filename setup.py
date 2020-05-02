@@ -21,13 +21,13 @@ plugin_version = "0.2.3"
 plugin_description = """Displays detailed progress on the LCD screen"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Emanuele Iannone"
+plugin_author = "Tom M"
 
 # The plugin's author's mail address.
-plugin_author_email = "emanuele@fondani.it"
+plugin_author_email = "tpmullan@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/eiannone/OctoPrint-DetailedProgress"
+plugin_url = "https://github.com/tpmullan/OctoPrint-DetailedProgress"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
