@@ -46,4 +46,5 @@ plugins:
 
 ### Time Variables:
 
-The eta_strftime uses built in python functions to format the time, examples can be found [here](https://strftime.org/)
+* The eta_strftime uses built in python functions to format the time, examples can be found [here](https://strftime.org/).  
+* Be careful when using the character `:` in the messages, some firmwares will [expect a checksum and crash](https://community.octoprint.org/t/error-no-checksum-with-line-number-last-line-18/8838/2).  To fix this issues either omit the character or update to the latest version of Marlin.
