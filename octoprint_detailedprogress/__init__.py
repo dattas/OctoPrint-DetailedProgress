@@ -152,7 +152,7 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 	def get_settings_defaults(self):
 		return dict(
 			time_to_change="10",
-			eta_strftime="%-m/%d %-I:%M%p",
+			eta_strftime="%-m/%d %-I.%M%p",
 			etl_format="{hours:02d}h{minutes:02d}m{seconds:02d}s",
 			print_done_message="Print Done",
 			use_M73 = True,
@@ -160,14 +160,14 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			all_messages=[
 				'{filename}',
 				'{completion:.2f}% complete',
-				'ETL: {printTimeLeft}',
-				'ETA: {ETA}',
+				'ETL {printTimeLeft}',
+				'ETA {ETA}',
 				'{accuracy} accuracy'
 			],
                         messages=[
 				'{completion:.2f}% complete',
-				'ETL: {printTimeLeft}',
-				'ETA: {ETA}',
+				'ETL {printTimeLeft}',
+				'ETA {ETA}',
 				'{accuracy} accuracy'
                         ]
 		)
