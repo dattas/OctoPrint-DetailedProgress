@@ -152,8 +152,8 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 	def get_settings_defaults(self):
 		return dict(
 			time_to_change="10",
-			eta_strftime="%H:%M:%S Day %d",
-			etl_format="{hours:02d}:{minutes:02d}:{seconds:02d}",
+			eta_strftime="%-m/%d %-I:%M%p",
+			etl_format="{hours:02d}h{minutes:02d}m{seconds:02d}s",
 			print_done_message="Print Done",
 			use_M73 = True,
 			M73_PrusaStyle = False,
