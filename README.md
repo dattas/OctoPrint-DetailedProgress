@@ -14,6 +14,7 @@ Install manually using this URL:
 
 ## Configuration
 
+### Manual Config File
 ``` yaml
 plugins:
   detailedprogress:
@@ -39,3 +40,6 @@ plugins:
       - "ETA: {ETA}"
     print_done_message: "Print Done"
 ```
+### Plugin Settings menu
+
+![Example Settings](https://i.imgur.com/fyBhJuW.jpg)
