@@ -43,3 +43,7 @@ plugins:
 ### Plugin Settings menu
 
 ![Example Settings](https://i.imgur.com/fyBhJuW.jpg)
+
+### Time Variables:
+
+The eta_strftime uses built in python functions to format the time, examples can be found [here](https://strftime.org/)
