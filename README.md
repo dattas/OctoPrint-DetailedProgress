@@ -42,7 +42,7 @@ plugins:
 ```
 ### Plugin Settings menu
 
-![Example Settings](https://i.imgur.com/fyBhJuW.jpg)
+![Example Settings](https://i.imgur.com/wdFGGrN.jpg)
 
 ### Time Variables:
 
