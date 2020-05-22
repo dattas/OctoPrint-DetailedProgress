@@ -42,6 +42,8 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			self._logger.info("Printing stopped. Detailed progress stopped.")
 			message = self._settings.get(["print_done_message"])
 			self._printer.commands("M117 {}".format(message))
+                        currentData = { "progress": { "completion": 100, "printTimeLeft": 0 } }
+                        self._update_progress(currentData)
 		elif event == Events.CONNECTED:
 			ip = self._get_host_ip()
 			if not ip:
@@ -59,18 +61,20 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
 			if self._M73:
-				progressPerc = int(currentData["progress"]["completion"])
-				if self._PrusaStyle:
-					printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
-					self._printer.commands("M73 P{} R{}".format(progressPerc,printMinutesLeft))
-					self._printer.commands("M73 Q{} S{}".format(progressPerc,printMinutesLeft))
-				else:
-					self._printer.commands("M73 P{}".format(progressPerc))
+                            self._update_progress(currentData)
 				
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e, traceback.format_exc()))
 
-	def _sanitize_current_data(self, currentData):
+        def _update_progress(self, currentData):
+		progressPerc = int(currentData["progress"]["completion"])
+		if self._PrusaStyle:
+			printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
+			self._printer.commands("M73 P{} R{}".format(progressPerc,printMinutesLeft))
+			self._printer.commands("M73 Q{} S{}".format(progressPerc,printMinutesLeft))
+		else:
+			self._printer.commands("M73 P{}".format(progressPerc))
+        def _sanitize_current_data(self, currentData):
 		if currentData["progress"]["printTimeLeft"] is None:
 			currentData["progress"]["printTimeLeft"] = currentData["job"]["estimatedPrintTime"]
 		if currentData["progress"]["filepos"] is None:
