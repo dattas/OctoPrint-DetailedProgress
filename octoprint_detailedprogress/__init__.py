@@ -42,8 +42,8 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			self._logger.info("Printing stopped. Detailed progress stopped.")
 			message = self._settings.get(["print_done_message"])
 			self._printer.commands("M117 {}".format(message))
-                        currentData = { "progress": { "completion": 100, "printTimeLeft": 0 } }
-                        self._update_progress(currentData)
+			currentData = {"progress": {"completion": 100, "printTimeLeft": 0}}
+			self._update_progress(currentData)
 		elif event == Events.CONNECTED:
 			ip = self._get_host_ip()
 			if not ip:
@@ -61,20 +61,21 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			message = self._get_next_message(currentData)
 			self._printer.commands("M117 {}".format(message))
 			if self._M73:
-                            self._update_progress(currentData)
-				
+				self._update_progress(currentData)
+
 		except Exception as e:
 			self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e, traceback.format_exc()))
 
-        def _update_progress(self, currentData):
+	def _update_progress(self, currentData):
 		progressPerc = int(currentData["progress"]["completion"])
 		if self._PrusaStyle:
-			printMinutesLeft = int(currentData["progress"]["printTimeLeft"]/60)
-			self._printer.commands("M73 P{} R{}".format(progressPerc,printMinutesLeft))
-			self._printer.commands("M73 Q{} S{}".format(progressPerc,printMinutesLeft))
+			printMinutesLeft = int(currentData["progress"]["printTimeLeft"] / 60)
+			self._printer.commands("M73 P{} R{}".format(progressPerc, printMinutesLeft))
+			self._printer.commands("M73 Q{} S{}".format(progressPerc, printMinutesLeft))
 		else:
 			self._printer.commands("M73 P{}".format(progressPerc))
-        def _sanitize_current_data(self, currentData):
+
+	def _sanitize_current_data(self, currentData):
 		if currentData["progress"]["printTimeLeft"] is None:
 			currentData["progress"]["printTimeLeft"] = currentData["job"]["estimatedPrintTime"]
 		if currentData["progress"]["filepos"] is None:
@@ -104,11 +105,16 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 
 		# Add additional data
 		try:
-			currentData["progress"]["printTimeString"] = self._get_time_from_seconds(currentData["progress"]["printTime"])
-			currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(currentData["progress"]["printTimeLeft"])
-			currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(time.time() + currentData["progress"]["printTimeLeft"]))
+			currentData["progress"]["printTimeString"] = self._get_time_from_seconds(
+				currentData["progress"]["printTime"])
+			currentData["progress"]["printTimeLeftString"] = self._get_time_from_seconds(
+				currentData["progress"]["printTimeLeft"])
+			currentData["progress"]["ETA"] = time.strftime(self._eta_strftime, time.localtime(
+				time.time() + currentData["progress"]["printTimeLeft"]))
 		except Exception as e:
-			self._logger.debug("Caught an exception trying to parse data: {0}\n Error is: {1}\nTraceback:{2}".format(currentData, e, traceback.format_exc()))
+			self._logger.debug(
+				"Caught an exception trying to parse data: {0}\n Error is: {1}\nTraceback:{2}".format(currentData, e,
+																									  traceback.format_exc()))
 
 		return currentData
 
@@ -159,8 +165,8 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			eta_strftime="%-m/%d %-I.%M%p",
 			etl_format="{hours:02d}h{minutes:02d}m{seconds:02d}s",
 			print_done_message="Print Done",
-			use_M73 = True,
-			M73_PrusaStyle = False,
+			use_M73=True,
+			M73_PrusaStyle=False,
 			all_messages=[
 				'{filename}',
 				'{completion:.2f}% complete',
@@ -168,12 +174,12 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 				'ETA {ETA}',
 				'{accuracy} accuracy'
 			],
-                        messages=[
+			messages=[
 				'{completion:.2f}% complete',
 				'ETL {printTimeLeft}',
 				'ETA {ETA}',
 				'{accuracy} accuracy'
-                        ]
+			]
 		)
 
 	##-- Template hooks
@@ -198,8 +204,10 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			)
 		)
 
+
 __plugin_name__ = "Detailed Progress"
 __plugin_pythoncompat__ = ">=2.7,<4"
+
 
 def __plugin_load__():
 	global __plugin_implementation__
