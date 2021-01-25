@@ -11,6 +11,13 @@ A plugin that sends M117 (and optionally M73) commands to the printer to display
 Install manually using this URL:
 
     https://github.com/tpmullan/OctoPrint-DetailedProgress/archive/master.zip
+    
+## Dependencies for layer progress etc. [Optional] 
+
+If you also want to display layer progress, height progress or time to filament change, you will have to install the plugin [DisplayLayerProgress](https://plugins.octoprint.org/plugins/DisplayLayerProgress).
+Follow setup instructions for that plugin.
+
+You will probably want to disable 'Printer Display' in the settings for DisplayLayerProgress.
 
 ## Configuration
 
@@ -48,3 +55,10 @@ plugins:
 
 * The eta_strftime uses built in python functions to format the time, examples can be found [here](https://strftime.org/).  
 * Be careful when using the character `:` in the messages, some firmwares will [expect a checksum and crash](https://community.octoprint.org/t/error-no-checksum-with-line-number-last-line-18/8838/2).  To fix this issues either omit the character or update to the latest version of Marlin.
+
+### Layer progress etc.
+If you chose to install [DisplayLayerProgress](https://plugins.octoprint.org/plugins/DisplayLayerProgress), enable one or all of:
+
+* Layer {layerProgress} 
+* Height {heightProgress}
+* Fil. change {changeFilamentIn}
