@@ -44,7 +44,7 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			self._printer.commands("M117 {}".format(message))
 			currentData = {"progress": {"completion": 100, "printTimeLeft": 0}}
 			self._update_progress(currentData)
-		elif event == Events.CONNECTED:
+		elif event == Events.CONNECTED and self._settings.get(["show_ip_at_startup"]):
 			ip = self._get_host_ip()
 			if not ip:
 				return
@@ -198,6 +198,7 @@ class DetailedProgress(octoprint.plugin.EventHandlerPlugin,
 			etl_format="{hours:02d}h{minutes:02d}m{seconds:02d}s",
 			print_done_message="Print Done",
 			use_M73=True,
+                        show_ip_at_startup=True,
 			M73_PrusaStyle=False,
 			all_messages=[
 				'{filename}',
