@@ -70,19 +70,33 @@
 		</div>
 	</div>
   
-  <h4>Progress bar update<h4>
+  <h4>Progress bar update</h4>
 	
-  <div class="control-group">
-		<label class="control-label">{{ _('Send M73 Progress Updates') }}</label>
+    <div class="control-group">
 		<div class="controls">
-      <input type="checkbox" class="input-block-level form-check-input" data-bind="checked: settings.plugins.detailedprogress.use_M73">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: settings.plugins.detailedprogress.use_M73">
+				{{ _('Send M73 Progress Updates') }}
+			</label>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-bind="checked: settings.plugins.detailedprogress.use_M73_R, enable: settings.plugins.detailedprogress.use_M73">
+				{{ _('Emit remaining time in M73') }}
+			</label>
+			<span class="help-block">Requires Marlin LCD_SET_PROGRESS_MANUALLY option - also supported in Prusa.</span>
 		</div>
 	</div>
 
-  <div class="control-group">
-		<label class="control-label">{{ _('Show Ip at Startup') }}</label>
+    <div class="control-group">
 		<div class="controls">
-      <input type="checkbox" class="input-block-level form-check-input" data-bind="checked: settings.plugins.detailedprogress.show_ip_at_startup">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: settings.plugins.detailedprogress.show_ip_at_startup">
+				{{ _('Show Ip at Startup') }}
+			</label>
 		</div>
 	</div>
 
