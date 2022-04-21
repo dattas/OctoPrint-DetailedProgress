@@ -31,8 +31,8 @@ plugins:
     etl_format: "{hours:02d}:{minutes:02d}:{seconds:02d}"
     # Send M73 progress commands 
     use_M73: true
-    # M73 commands syntax specific for Prusa Firmware (>=3.3.0)
-    M73_PrusaStyle: true
+    # Send the 'R' parameter for M73 commands (supported in Marlin when compiled with LCD_SET_PROGRESS_MANUALLY and Prusa firmware > 3.3.0)
+    use_M73_R: true
     # Messages to display. Placeholders:
     # - completion : The % completed
     # - printTime : A string in the format "HH:MM:SS" with how long the print is going
